@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "maybe-data",
+  "version": "${version}",
+  "name": "Maybe data",
+  "description": "I... might need to load this recipe. Not sure.",
+  "authors": [
+    "Draylar"
+  ],
+  "license": "CC0-1.0",
+  "icon": "assets/maybe-data/icon.png",
+  "environment": "*",
+  "mixins": [
+    "maybe-data.mixins.json"
+  ],
+  "accessWidener": "maybedata.accesswidener",
+  "depends": {
+    "fabricloader": ">=0.9.1+build.205",
+    "fabric": "*",
+    "minecraft": "1.16.2"
+  }
+}

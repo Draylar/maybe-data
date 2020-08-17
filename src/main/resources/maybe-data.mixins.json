@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "draylar.maybedata.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "JsonDataLoaderMixin",
+    "RecipeManagerAccessor",
+    "ServerResourceManagerMixin"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
