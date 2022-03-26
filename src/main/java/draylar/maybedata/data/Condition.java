@@ -15,11 +15,11 @@ public class Condition {
     }
 
     public boolean verify() {
-        if(!modid.isEmpty()) {
+        if(!(modid == null || modid.isEmpty())) {
             return FabricLoader.getInstance().isModLoaded(modid);
         }
 
-        if(!item.isEmpty()) {
+        if(!(item == null || item.isEmpty())) {
             return Registry.ITEM.getIds().contains(new Identifier(item));
         }
 
