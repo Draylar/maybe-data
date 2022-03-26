@@ -2,27 +2,29 @@ package draylar.maybedata.data;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
+import com.google.gson.*;
+import com.mojang.logging.LogUtils;
 import draylar.maybedata.mixin.RecipeManagerAccessor;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeManager;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.resource.ResourceManager;
-import net.minecraft.resource.ServerResourceManager;
+import net.minecraft.server.DataPackContents;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.profiler.Profiler;
+import org.slf4j.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class ConditionalRecipeManager extends RecipeManager {
 
-    private final ServerResourceManager manager;
+    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
+    private static final Logger LOGGER = LogUtils.getLogger();
+    private final DataPackContents manager;
 
-    public ConditionalRecipeManager(ServerResourceManager manager) {
+    public ConditionalRecipeManager(DataPackContents manager) {
         this.manager = manager;
     }
 

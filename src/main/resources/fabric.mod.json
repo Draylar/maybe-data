@@ -13,10 +13,9 @@
   "mixins": [
     "maybe-data.mixins.json"
   ],
-  "accessWidener": "maybedata.accesswidener",
   "depends": {
-    "fabricloader": ">=0.9.1+build.205",
+    "fabricloader": "*",
     "fabric": "*",
-    "minecraft": ">=1.17"
+    "minecraft": ">=1.18"
   }
 }
