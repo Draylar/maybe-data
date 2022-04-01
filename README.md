@@ -1,8 +1,10 @@
 # Maybe Data
 
-Maybe Data is a super simple, lightweight library that allows you to conditionally load recipes. 
+Maybe Data is a super simple, lightweight library that allows you to conditionally load data. 
 
-Maybe Data will *only* attempt to load when the mod is installed (= a mod bundles Maybe Data), and when the condition at the top of the recipe file is met. Here's an example:
+Maybe Data will *only* attempt to load when the mod is installed (= a mod bundles Maybe Data), and when the condition at the top of the recipe file is met.
+
+### Recipes
 
 `resources/data/modid/mayberecipes/golden_apple.json`
 ```json
@@ -33,5 +35,29 @@ Maybe Data will *only* attempt to load when the mod is installed (= a mod bundle
 ```
 
 This recipe will only load when Maybe Data is installed (More Apples / another mod might JIJ it), and when the `moreapples` modid exists. Simple, right?
+
+### Loot Tables
+
+Add the following json block to the top level of your loot table .json file (in the same directory as vanilla):
+```json
+"condition": {
+    "modid": "testmod"
+}
+```
+
+Example:
+```json
+{
+  "condition": {
+    "modid": "testmod"
+  },
+  "type": "minecraft:block",
+  // ... rest of loot table here
+}
+```
+
+If the required modid is not present when datapacks are loaded, the loot table will be skipped.
+
+---
 
 Looking for more conditional control? Check out [LibCD](https://github.com/cottonmc/LibCD). This mod is MIT and built for the Fabric Loader.
