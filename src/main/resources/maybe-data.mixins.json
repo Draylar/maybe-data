@@ -3,6 +3,7 @@
   "package": "draylar.maybedata.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "DataPackContentsMixin",
     "JsonDataLoaderMixin",
     "LootManagerMixin",
     "RecipeManagerAccessor"

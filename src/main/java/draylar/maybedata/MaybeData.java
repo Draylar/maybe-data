@@ -1,36 +1,25 @@
 package draylar.maybedata;
 
+import draylar.maybedata.data.ConditionalRecipeManager;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
-import net.fabricmc.fabric.api.resource.SimpleResourceReloadListener;
-import net.minecraft.resource.ResourceManager;
 import net.minecraft.resource.ResourceType;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.profiler.Profiler;
-
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
+import net.minecraft.server.DataPackContents;
 
 public class MaybeData implements ModInitializer {
 
+    private static DataPackContents dataPackContents;
+
     @Override
     public void onInitialize() {
-        ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new SimpleResourceReloadListener<>() {
+        ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new ConditionalRecipeManager());
+    }
 
-            @Override
-            public Identifier getFabricId() {
-                return null;
-            }
+    public static void setDataPackContents(DataPackContents dataPackContents) {
+        MaybeData.dataPackContents = dataPackContents;
+    }
 
-            @Override
-            public CompletableFuture<Object> load(ResourceManager manager, Profiler profiler, Executor executor) {
-                return null;
-            }
-
-            @Override
-            public CompletableFuture<Void> apply(Object data, ResourceManager manager, Profiler profiler, Executor executor) {
-                return null;
-            }
-        });
+    public static DataPackContents getDataPackContents() {
+        return dataPackContents;
     }
 }

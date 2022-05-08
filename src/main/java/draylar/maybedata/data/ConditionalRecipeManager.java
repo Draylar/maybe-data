@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.google.gson.*;
 import com.mojang.logging.LogUtils;
+import draylar.maybedata.MaybeData;
 import draylar.maybedata.mixin.RecipeManagerAccessor;
 import net.fabricmc.fabric.api.resource.SimpleResourceReloadListener;
 import net.minecraft.recipe.Recipe;
@@ -26,10 +27,8 @@ public class ConditionalRecipeManager extends RecipeManager implements SimpleRes
     private static final Identifier ID = new Identifier("maybedata", "conditional_recipes");
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
     private static final Logger LOGGER = LogUtils.getLogger();
-    private final DataPackContents manager;
 
-    public ConditionalRecipeManager(DataPackContents manager) {
-        this.manager = manager;
+    public ConditionalRecipeManager() {
     }
 
     @Override
@@ -61,7 +60,7 @@ public class ConditionalRecipeManager extends RecipeManager implements SimpleRes
         });
 
         // collect original & new recipes
-        Map<RecipeType<?>, Map<Identifier, Recipe<?>>> existing = ((RecipeManagerAccessor) manager.getRecipeManager()).getRecipes();
+        Map<RecipeType<?>, Map<Identifier, Recipe<?>>> existing = ((RecipeManagerAccessor) MaybeData.getDataPackContents().getRecipeManager()).getRecipes();
         ImmutableMap<? extends RecipeType<?>, ImmutableMap<Identifier, Recipe<?>>> parsed = parse(valid);
         HashMap<RecipeType<?>, Map<Identifier, Recipe<?>>> combined = new HashMap<>();
 
@@ -84,7 +83,7 @@ public class ConditionalRecipeManager extends RecipeManager implements SimpleRes
         });
 
         // replace current recipe collection
-        ((RecipeManagerAccessor) manager.getRecipeManager()).setRecipes(combined);
+        ((RecipeManagerAccessor) MaybeData.getDataPackContents().getRecipeManager()).setRecipes(combined);
     }
 
     public ImmutableMap<? extends RecipeType<?>, ImmutableMap<Identifier, Recipe<?>>> parse(Map<Identifier, JsonElement> map) {

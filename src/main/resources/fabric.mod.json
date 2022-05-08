@@ -10,6 +10,11 @@
   "license": "MIT",
   "icon": "assets/maybe-data/icon.png",
   "environment": "*",
+  "entrypoints": {
+    "main": [
+      "draylar.maybedata.MaybeData"
+    ]
+  },
   "mixins": [
     "maybe-data.mixins.json"
   ],
