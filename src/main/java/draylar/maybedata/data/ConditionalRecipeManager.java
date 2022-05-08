@@ -5,6 +5,7 @@ import com.google.common.collect.Maps;
 import com.google.gson.*;
 import com.mojang.logging.LogUtils;
 import draylar.maybedata.mixin.RecipeManagerAccessor;
+import net.fabricmc.fabric.api.resource.SimpleResourceReloadListener;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeManager;
 import net.minecraft.recipe.RecipeType;
@@ -17,9 +18,12 @@ import org.slf4j.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
 
-public class ConditionalRecipeManager extends RecipeManager {
+public class ConditionalRecipeManager extends RecipeManager implements SimpleResourceReloadListener<Map<Identifier, JsonElement>> {
 
+    private static final Identifier ID = new Identifier("maybedata", "conditional_recipes");
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
     private static final Logger LOGGER = LogUtils.getLogger();
     private final DataPackContents manager;
@@ -29,13 +33,26 @@ public class ConditionalRecipeManager extends RecipeManager {
     }
 
     @Override
+    public Identifier getFabricId() {
+        return ID;
+    }
+
+    @Override
+    public CompletableFuture<Map<Identifier, JsonElement>> load(ResourceManager manager, Profiler profiler, Executor executor) {
+        return CompletableFuture.supplyAsync(() -> super.prepare(manager, profiler));
+    }
+
+    @Override
+    public CompletableFuture<Void> apply(Map<Identifier, JsonElement> data, ResourceManager manager, Profiler profiler, Executor executor) {
+        return CompletableFuture.runAsync(() -> apply(data, manager, profiler));
+    }
+
+    @Override
     public void apply(Map<Identifier, JsonElement> map, ResourceManager resourceManager, Profiler profiler) {
         Map<Identifier, JsonElement> valid = new HashMap<>();
 
         map.forEach((identifier, jsonElement) -> {
-            if(jsonElement instanceof JsonObject) {
-                JsonObject obj = (JsonObject) jsonElement;
-
+            if(jsonElement instanceof JsonObject obj) {
                 Condition condition = GSON.fromJson(obj.get("condition"), Condition.class);
                 if(condition.verify()) {
                     valid.put(new Identifier(identifier.getNamespace(), String.format("mayberecipe_%s", identifier.getPath())), obj.get("recipe"));

@@ -5,8 +5,7 @@
   "mixins": [
     "JsonDataLoaderMixin",
     "LootManagerMixin",
-    "RecipeManagerAccessor",
-    "ServerResourceManagerMixin"
+    "RecipeManagerAccessor"
   ],
   "client": [
   ],
