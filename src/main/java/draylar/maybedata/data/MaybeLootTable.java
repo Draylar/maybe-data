@@ -2,7 +2,7 @@ package draylar.maybedata.data;
 
 public class MaybeLootTable {
 
-    private Condition condition = null;
+    private final Condition condition;
 
     public MaybeLootTable(Condition condition) {
         this.condition = condition;

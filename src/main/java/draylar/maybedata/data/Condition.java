@@ -6,12 +6,14 @@ import net.minecraft.util.registry.Registry;
 
 public class Condition {
 
-    private String modid = "";
-    private String item = "";
+    private final String modid;
+    private final String item;
+    private final String block;
 
-    public Condition(String modid, String item) {
+    public Condition(String modid, String item, String block) {
         this.modid = modid;
         this.item = item;
+        this.block = block;
     }
 
     public boolean verify() {
@@ -21,6 +23,10 @@ public class Condition {
 
         if(!(item == null || item.isEmpty())) {
             return Registry.ITEM.getIds().contains(new Identifier(item));
+        }
+
+        if(!(block == null || block.isEmpty())) {
+            return Registry.BLOCK.getIds().contains(new Identifier(block));
         }
 
         return false;
