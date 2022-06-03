@@ -21,7 +21,8 @@ public class JsonDataLoaderMixin {
              at = @At("RETURN")
      )
     private void modifyS(Gson gson, String dataType, CallbackInfo ci) {
-         if((Object) this instanceof ConditionalRecipeManager) {
+        //noinspection ConstantConditions
+        if((Object) this instanceof ConditionalRecipeManager) {
              this.dataType = "mayberecipes";
          }
      }
