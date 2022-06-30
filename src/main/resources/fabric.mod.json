@@ -8,7 +8,6 @@
     "Draylar"
   ],
   "license": "MIT",
-  "icon": "assets/maybe-data/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
