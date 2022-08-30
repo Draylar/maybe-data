@@ -17,6 +17,7 @@ import net.minecraft.util.profiler.Profiler;
 import org.slf4j.Logger;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
@@ -61,12 +62,12 @@ public class ConditionalRecipeManager extends RecipeManager implements SimpleRes
         // collect original & new recipes
         Map<RecipeType<?>, Map<Identifier, Recipe<?>>> existing = ((RecipeManagerAccessor) MaybeData.getDataPackContents().getRecipeManager()).getRecipes();
         ImmutableMap<? extends RecipeType<?>, ImmutableMap<Identifier, Recipe<?>>> parsed = parse(valid);
-        HashMap<RecipeType<?>, Map<Identifier, Recipe<?>>> combined = new HashMap<>();
+        HashMap<RecipeType<?>, Map<Identifier, Recipe<?>>> combined = new LinkedHashMap<>();
 
         // add old recipes
         existing.forEach((recipeType, identifierRecipeMap) -> {
             if(!combined.containsKey(recipeType)) {
-                combined.put(recipeType, new HashMap<>());
+                combined.put(recipeType, new LinkedHashMap<>());
             }
 
             combined.get(recipeType).putAll(identifierRecipeMap);
@@ -75,7 +76,7 @@ public class ConditionalRecipeManager extends RecipeManager implements SimpleRes
         // add new recipes
         parsed.forEach((recipeType, identifierRecipeMap) -> {
             if(!combined.containsKey(recipeType)) {
-                combined.put(recipeType, new HashMap<>());
+                combined.put(recipeType, new LinkedHashMap<>());
             }
 
             combined.get(recipeType).putAll(identifierRecipeMap);
