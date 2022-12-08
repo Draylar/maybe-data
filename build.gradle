@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '0.12.+'
+    id 'fabric-loom' version '1.0-SNAPSHOT'
     id 'maven-publish'
 }
 
@@ -45,6 +45,11 @@ jar {
     }
 
     exclude 'data/'
+}
+
+wrapper {
+    gradleVersion("7.6")
+    distributionType(Wrapper.DistributionType.BIN)
 }
 
 // configure the maven publication

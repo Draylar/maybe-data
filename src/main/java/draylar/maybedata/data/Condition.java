@@ -1,8 +1,8 @@
 package draylar.maybedata.data;
 
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 public class Condition {
 
@@ -22,11 +22,11 @@ public class Condition {
         }
 
         if(!(item == null || item.isEmpty())) {
-            return Registry.ITEM.getIds().contains(new Identifier(item));
+            return Registries.ITEM.getIds().contains(new Identifier(item));
         }
 
         if(!(block == null || block.isEmpty())) {
-            return Registry.BLOCK.getIds().contains(new Identifier(block));
+            return Registries.BLOCK.getIds().contains(new Identifier(block));
         }
 
         return false;
